@@ -1,0 +1,9 @@
+# .NET
+bin/
+obj/
+publish/
+*.pdb
+
+# VS
+*.csproj.user
+*.suo

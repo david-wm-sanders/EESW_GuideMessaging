@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GuideMessaging</name>
+    </assembly>
+    <members>
+        <member name="T:GuideMessaging.CommandCentre">
+            <summary>
+            Command Centre
+            </summary>
+        </member>
+        <member name="M:GuideMessaging.CommandCentre.#ctor(System.String)">
+            <summary>
+            Initializes the Command Centre, using the specified .txt file.
+            </summary>
+            <param name="configFile">A .txt file where the first line is the publisherPortNumber and the second line is the receiverPortNumber.</param>
+        </member>
+        <member name="M:GuideMessaging.CommandCentre.#ctor(System.String,System.String)">
+            <summary>
+            Initializes the Command Centre, setting up a publishing socket and
+            a receiving socket, and begins waiting for incoming reports.
+            </summary>
+            <param name="publisherPortNumber">The port, between 49152 and 65535, to which the publisher should be bound.</param>
+            <param name="receiverPortNumber">The port, between 49152 and 65535, to which the receiver should be bound.</param>
+        </member>
+        <member name="M:GuideMessaging.CommandCentre.Send(System.Byte[])">
+            <summary>
+            Publish a message to all connected Units.
+            </summary>
+            <param name="message">Serialized/encoded message data.</param>
+        </member>
+        <member name="M:GuideMessaging.CommandCentre.Send(System.String)">
+            <summary>
+            Encodes the provided string using UTF-16, and publishes it to all connected Units.
+            No automatic decoding is done by the Unit when it receives a message sent using this command.
+            Use <code>Encoding.Unicode.GetString(message.Data)</code> on the Unit-side event to decode the message.
+            </summary>
+            <param name="message">Message string.</param>
+        </member>
+        <member name="E:GuideMessaging.CommandCentre.ReportReceived">
+            <summary>
+            Fired when a report is received.
+            </summary>
+        </member>
+        <member name="T:GuideMessaging.Unit">
+            <summary>
+            Unit
+            </summary>
+        </member>
+        <member name="M:GuideMessaging.Unit.#ctor(System.String)">
+            <summary>
+            Initializes the Unit, using the specified .txt file.
+            </summary>
+            <param name="configFile">A .txt file where the first line is the IP, the second line is the subscriberPortNumber and the third line is the senderPortNumber.</param>
+        </member>
+        <member name="M:GuideMessaging.Unit.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes the Unit, setting up a subscribing socket and
+            a sending socket, and begins waiting on incoming alerts.
+            </summary>
+            <param name="IP">The IP Address of the Command Centre.</param>
+            <param name="subscriberPortNumber">The port to which the subscriber should be connected.</param>
+            <param name="senderPortNumber">The port to which the sender should be connected.</param>
+        </member>
+        <member name="M:GuideMessaging.Unit.Send(System.Byte[])">
+            <summary>
+            Send a message to the Command Centre.
+            </summary>
+            <param name="message">Serialized/encoded message data.</param>
+        </member>
+        <member name="M:GuideMessaging.Unit.Send(System.String)">
+            <summary>
+            Encodes the provided string using UTF-16, and sends it to the Command Centre.
+            No automatic decoding is done by the Command Centre when it receives a message sent using this command.
+            Use <code>Encoding.Unicode.GetString(message.Data)</code> on the CC-side event to decode the message.
+            </summary>
+            <param name="message">Message string.</param>
+        </member>
+        <member name="E:GuideMessaging.Unit.AlertReceived">
+            <summary>
+            Fired when an alert is received.
+            </summary>
+        </member>
+        <member name="T:GuideMessaging.MessageReceivedEventHandler">
+            <summary>
+            The event handler for received messages (alerts/reports).
+            </summary>
+            <param name="sender">The CommandCentre or Unit instance that received the message.</param>
+            <param name="message">NewMessageEventArgs containing the message data.</param>
+        </member>
+        <member name="T:GuideMessaging.NewMessageEventArgs">
+            <summary>
+            EventArgs derivative that stores the message data received.
+            </summary>
+        </member>
+        <member name="M:GuideMessaging.NewMessageEventArgs.#ctor(System.Byte[])">
+            <summary>
+            NewMessageEventArgs constructor, that takes the received message data as a parameter.
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="P:GuideMessaging.NewMessageEventArgs.Data">
+            <summary>
+            The message data received.
+            </summary>
+        </member>
+        <member name="T:GuideMessaging.ErrorLogging">
+            <summary>
+            This class provides quick and easy error logging functionality.
+            </summary>
+        </member>
+    </members>
+</doc>
